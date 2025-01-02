@@ -20,7 +20,7 @@ namespace E_Commerce.Controller
 			_mapper = mapper;
 		}
 		[HttpGet]
-		public IActionResult CategoryList() 
+		public IActionResult CategoryList()
 		{
 			var values = _mapper.Map<List<ResultCategoryDto>>(_categoryService.TGetListAll());
 			return Ok(values);
@@ -28,20 +28,25 @@ namespace E_Commerce.Controller
 		[HttpPost]
 		public IActionResult CreateCategory(CreateCategoryDto createCategoryDto)
 		{
-			try
+
+			_categoryService.TAdd(new Category()
 			{
-				_categoryService.TAdd(new Category()
-				{
-					CategoryName = createCategoryDto.CategoryName,
-					CategoryDescription = createCategoryDto.CategoryDescription,
-					CategoryStatus = true
-				});
-				return Ok("Kategori Eklendi");
-			}
-			catch (Exception ex)
+				CategoryName = createCategoryDto.CategoryName,
+				CategoryDescription = createCategoryDto.CategoryDescription,
+				CategoryStatus = true
+			});
+			return Ok($"Kategori Eklendi.");
+		}
+		[HttpPut]
+		public IActionResult UpdateCategory(UpdateCategoryDto updateCategoryDto)
+		{
+			_categoryService.TUpdate(new Category()
 			{
-				return BadRequest($"Hata: {ex.Message}");
-			}
+				CategoryID = updateCategoryDto.CategoryID,
+				CategoryName = updateCategoryDto.CategoryName,
+				CategoryStatus = updateCategoryDto.CategoryStatus,
+			});
+			return Ok();
 		}
 	}
 }

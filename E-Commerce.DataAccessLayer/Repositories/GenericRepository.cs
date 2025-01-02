@@ -42,7 +42,7 @@ namespace E_Commerce.DataAccessLayer.Repositories
 		public void Update(T entity)
 		{
 			_context.Update(entity);
-			_context.SaveChangesAsync();
+			_context.SaveChanges();
 		}
 	}
 }
